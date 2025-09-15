@@ -1316,22 +1316,22 @@ const PatientManagement = () => {
       {/* Patient Table */}
       <Card className="bg-gradient-card border-border shadow-card ">
         <CardHeader>
-          <CardTitle>Patient Records</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-black">Patient Records</CardTitle>
+          <CardDescription className="text-black">
             {filteredPatients.length} patients found
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent >
           <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>MRN</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Age</TableHead>
-                <TableHead>Gender</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Symptoms</TableHead>
+            <TableHeader >
+              <TableRow >
+                <TableHead className="text-black">MRN</TableHead>
+                <TableHead className="text-black">Name</TableHead>
+                <TableHead className="text-black">Age</TableHead>
+                <TableHead className="text-black">Gender</TableHead>
+                <TableHead className="text-black">Contact</TableHead>
+                <TableHead className="text-black">Status</TableHead>
+                <TableHead className="text-black">Symptoms</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
