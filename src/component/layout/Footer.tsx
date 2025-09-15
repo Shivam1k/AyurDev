@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="bg-gradient-to-br from-blue-800 to-gray-800 text-white">
 
       {/* Government Logos Section */}
-      <div className="bg-white/95 py-8 border-b border-white/10">
+      {/* <div className="bg-white/95 py-8 border-b border-white/10">
         <div className="max-w-[1400px] mx-auto px-5 flex flex-wrap justify-between items-center gap-10">
 
           {[
@@ -27,7 +27,7 @@ const Footer = () => {
           ))}
 
         </div>
-      </div>
+      </div> */}
 
       {/* Main Footer Content */}
       <div className="py-16 px-5">
@@ -61,7 +61,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-6">Important Links</h3>
             <ul className="space-y-3">
-              {["Ministry of Health and Family Welfare","Ayushman Bharat Digital Mission","Grievance portal","FAQs"].map((link, idx) => (
+              {[" Powering Interoperable Digital Health ","Standardized Health Coding","Grievance portal","FAQs"].map((link, idx) => (
                 <li key={idx} className="flex items-center gap-2 text-gray-300 hover:text-white">● {link}</li>
               ))}
             </ul>
@@ -79,7 +79,7 @@ const Footer = () => {
 
           {/* ABHA Application */}
           <div>
-            <h3 className="text-xl font-semibold mb-6">ABHA Application</h3>
+            <h2 className="text-xl font-semibold mb-6">EHR System</h2>
             <div className="flex flex-col gap-5">
               <div className="flex gap-5 justify-center">
                 <div className="w-24 h-24 bg-white rounded flex items-center justify-center">QR</div>

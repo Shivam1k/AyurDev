@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
   return (
@@ -10,33 +11,33 @@ const Hero: React.FC = () => {
             {/* Main Title */}
             <div className="flex flex-col gap-4">
               <h1 className="text-5xl md:text-6xl font-bold text-blue-800 leading-tight">
-                Ayushman Bharat Digital Mission
+                EMR Systems 
               </h1>
               <p className="text-xl md:text-2xl text-blue-700/80 font-medium">
-                Your Digital Health Journey Begins Here
+                   Powering Interoperable Digital Health 
               </p>
             </div>
 
             {/* ABHA Section */}
             <div className="flex flex-col gap-6">
-              <h2 className="text-3xl font-bold text-blue-800">ABHA Address</h2>
+              <h2 className="text-3xl font-bold text-blue-800">Standardized Health Coding</h2>
               <p className="text-gray-700 max-w-lg leading-relaxed">
-                ABHA Address is an easy to remember username that enables a user to access their 
-                health records digitally and share their records with various healthcare providers. An 
-                ABHA address may look like 'name@abdm'. It is required to sign up on ABHA Application.
+               Standardized coding ensures that patient data entered by healthcare providers is mapped and validated using NAMASTE & ICD-11 TM2. This enables accurate, interoperable, and paperless health records across EMR systems.
               </p>
             </div>
 
             {/* CTA Section */}
             <div className="flex flex-col gap-4">
               <button className="self-start px-8 py-4 bg-gradient-to-r from-orange-400 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:translate-y-[-3px] transition-all duration-300">
-                Create ABHA Address
+                <Link to="/register">Create New Account</Link>
               </button>
               <p className="text-gray-600">
-                Already have an ABHA address?{" "}
-                <a href="#" className="text-orange-500 font-semibold underline hover:no-underline">
+               Already using standardized codes?{" "}
+               <Link  to="/login" className="text-orange-500 font-semibold underline hover:no-underline">
+                
                   Login
-                </a>
+                
+                </Link>
               </p>
             </div>
           </div>

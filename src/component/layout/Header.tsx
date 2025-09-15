@@ -21,15 +21,15 @@ const Header: React.FC = () => {
           {/* Logo Section */}
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-md bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center text-white font-bold text-lg">
-              NHA
+              AHA
             </div>
             <div className="hidden sm:block text-gray-800">
-              <h1 className="text-lg font-bold leading-tight">national</h1>
+              <h1 className="text-lg font-bold leading-tight">AryuDev</h1>
               <h2 className="text-sm font-normal text-gray-500">health authority</h2>
             </div>
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-green-500 to-green-800 flex items-center justify-center text-white text-xl sm:text-2xl">
+            {/* <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-green-500 to-green-800 flex items-center justify-center text-white text-xl sm:text-2xl">
               🏥
-            </div>
+            </div> */}
           </div>
 
           {/* Right Side */}
@@ -38,9 +38,11 @@ const Header: React.FC = () => {
               <span>English</span>
               <span className="text-xs">▼</span>
             </div>
+            <Link to="/register">
             <button className="bg-gradient-to-br from-orange-500 to-orange-400 text-white font-semibold px-6 py-2 rounded-md shadow hover:shadow-lg hover:-translate-y-0.5 transform transition">
-              Create ABHA Address
+              Create as Doctor
             </button>
+            </Link>
           </div>
 
           {/* Mobile Hamburger */}
@@ -54,7 +56,7 @@ const Header: React.FC = () => {
       </header>
 
       {/* Navbar */}
-      <nav className="bg-gradient-to-r from-blue-500 to-blue-700">
+      <nav className="bg-gradient-to-r from-blue-500 to-blue-700 sticky top-0 z-50 shadow">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
           {/* Menu (Desktop) */}
           <ul className="hidden md:flex items-center relative">
@@ -122,12 +124,11 @@ const Header: React.FC = () => {
             >
               <span className="text-lg">👤</span> Login
             </Link>
-            <a
-              href="#"
-              className="flex items-center gap-2 px-5 py-2 text-white font-medium bg-white/20 border border-white/30 rounded hover:bg-white/30 transition"
-            >
-              <span className="text-lg">🆔</span> Create ABHA Number
-            </a>
+            <Link to="/register"    className="flex items-center gap-2 px-5 py-2 text-white font-medium bg-white/20 border border-white/30 rounded hover:bg-white/30 transition">
+              
+              <span className="text-lg">🆔</span> Create as Patient
+           
+            </Link>
           </div>
         </div>
 

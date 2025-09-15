@@ -1219,21 +1219,21 @@ const PatientManagement = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="insurance">Insurance</Label>
+                  <Label htmlFor="insurance">Treatment </Label>
                   <Input
                     id="insurance"
                     value={formData.insurance}
                     onChange={handleChange}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <Label htmlFor="allergies">Allergies</Label>
                   <Input
                     id="allergies"
                     value={formData.allergies}
                     onChange={handleChange}
                   />
-                </div>
+                </div> */}
 
                 {/* Symptom */}
                 <div>

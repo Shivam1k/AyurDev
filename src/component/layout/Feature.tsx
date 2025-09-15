@@ -3,7 +3,7 @@ import React from "react";
 const features = [
   {
     title: "Paperless management",
-    description: "Access your information right from admission to discharge in a paperless manner",
+    description: "Enter and store patient data digitally in EMR databases — no paperwork, fully validated.",
     color: "red-500",
     icon: (
       <svg fill="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
@@ -14,8 +14,8 @@ const features = [
     ),
   },
   {
-    title: "Continuum of care",
-    description: "Create your longitudinal health history for evidence based treatment",
+    title: "Standardized Coding",
+    description: "Map health records with NAMASTE & ICD-11 TM2 codes for both AYUSH and modern medicine.",
     color: "green-500",
     icon: (
       <svg fill="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
@@ -28,8 +28,8 @@ const features = [
     ),
   },
   {
-    title: "Unique identity via ABHA number",
-    description: "Link your ABHA address with ABHA number to ensure that the health records created for you are shared only with you",
+    title: "Compliance with EHR Standards",
+    description: "Every record is checked against India’s EHR & ABDM guidelines for accuracy and trust.",
     color: "yellow-500",
     icon: (
       <svg fill="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
@@ -41,8 +41,8 @@ const features = [
     ),
   },
   {
-    title: "Easy sharing of health records",
-    description: "Request your health data from participating healthcare information providers",
+    title: "Easy Report Generation",
+    description: "Generate validated reports for healthcare providers directly from the system.",
     color: "blue-500",
     icon: (
       <svg fill="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
@@ -54,8 +54,8 @@ const features = [
     ),
   },
   {
-    title: "Consent-based sharing and linking",
-    description: "Deny or grant consent at anytime",
+    title: "Consent-based Data Sharing",
+    description: "Patients stay in control — grant or deny access to their health records anytime.",
     color: "orange-500",
     icon: (
       <svg fill="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
@@ -74,7 +74,7 @@ const Features: React.FC = () => {
     <section className="relative bg-gradient-to-br from-blue-800 to-gray-900 py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 relative z-10">
         <h2 className="text-center text-4xl md:text-5xl font-semibold text-white mb-16">
-          What can you do with your ABHA address?
+          What can you do with this system?
         </h2>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
