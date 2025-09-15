@@ -663,15 +663,341 @@
 
 
 
+// import { useState, useEffect } from "react";
+// import { Plus } from "lucide-react";
+// import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card";
+// import { Button } from "../components/ui/button";
+// import { Input } from "../components/ui/input";
+// import { Badge } from "../components/ui/badge";
+// import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
+// import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "../components/ui/dialog";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+// import { Label } from "../components/ui/label";
+// import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
+
+// interface Patient {
+//   id: string;
+//   firstName: string;
+//   lastName: string;
+//   dob: string;
+//   gender: string;
+//   phone: string;
+//   email: string;
+//   address: string;
+//   mrn: string;
+//   insurance: string;
+//   allergies: string;
+//   symptoms: string[];
+//   status: string;
+// }
+
+// interface SearchResult {
+//   rank: number;
+//   term: string;
+//   id: number;
+//   score: number;
+// }
+
+// const PatientManagement = () => {
+//   const [patients, setPatients] = useState<Patient[]>([]);
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [isAddPatientOpen, setIsAddPatientOpen] = useState(false);
+
+//   // Form states
+//   const [formData, setFormData] = useState<Omit<Patient, "id" | "status" | "symptoms">>({
+//     firstName: "",
+//     lastName: "",
+//     dob: "",
+//     gender: "",
+//     phone: "",
+//     email: "",
+//     address: "",
+//     mrn: "",
+//     insurance: "",
+//     allergies: "",
+//   });
+//   const [query, setQuery] = useState("");
+//   const [results, setResults] = useState<SearchResult[]>([]);
+//   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
+//   const [loading, setLoading] = useState(false);
+
+//   // Filtered patients
+//   const filteredPatients = patients.filter(
+//     p =>
+//       p.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       p.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       p.mrn.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       p.email.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+
+//   // Fetch symptom suggestions
+//   useEffect(() => {
+//     if (!query.trim()) {
+//       setResults([]);
+//       return;
+//     }
+//     setLoading(true);
+//     const fetchResults = async () => {
+//       try {
+//         const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
+//         const data = await res.json();
+//         setResults(data.results || []);
+//       } catch (err) {
+//         console.error(err);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     const debounce = setTimeout(fetchResults, 400);
+//     return () => clearTimeout(debounce);
+//   }, [query]);
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const { id, value } = e.target;
+//     setFormData(prev => ({ ...prev, [id]: value }));
+//   };
+
+//   const handleAddPatient = () => {
+//     const newPatient: Patient = {
+//       id: `P${Math.floor(Math.random() * 10000).toString().padStart(3, "0")}`,
+//       status: "Active",
+//       symptoms: selectedTerm ? [selectedTerm] : query ? [query] : [],
+//       ...formData,
+//     };
+//     setPatients(prev => [...prev, newPatient]);
+//     setFormData({
+//       firstName: "",
+//       lastName: "",
+//       dob: "",
+//       gender: "",
+//       phone: "",
+//       email: "",
+//       address: "",
+//       mrn: "",
+//       insurance: "",
+//       allergies: "",
+//     });
+//     setQuery("");
+//     setSelectedTerm(null);
+//     setIsAddPatientOpen(false);
+//   };
+
+//   return (
+//     <div className="space-y-6 p-6 lg:p-8">
+//       {/* Header */}
+//       <div className="flex justify-between items-start">
+//         <h1 className="text-3xl font-semibold text-foreground">Patient Management</h1>
+//         <Dialog open={isAddPatientOpen} onOpenChange={setIsAddPatientOpen}>
+//           <DialogTrigger asChild>
+//             <Button className="bg-gradient-primary text-white shadow-medical">
+//               <Plus className="h-4 w-4 mr-2" /> Add Patient
+//             </Button>
+//           </DialogTrigger>
+//           <DialogContent className="max-w-2xl bg-card border-border">
+//             <DialogHeader>
+//               <DialogTitle>Add New Patient</DialogTitle>
+//               <DialogDescription>Fill patient info and add symptom</DialogDescription>
+//             </DialogHeader>
+
+//             {/* Form */}
+//             <Tabs defaultValue="demographics" className="w-full">
+//               <TabsList className="grid w-full grid-cols-3 bg-muted">
+//                 <TabsTrigger value="demographics">Demographics</TabsTrigger>
+//                 <TabsTrigger value="contact">Contact</TabsTrigger>
+//                 <TabsTrigger value="medical">Medical</TabsTrigger>
+//               </TabsList>
+
+//               {/* Demographics */}
+//               <TabsContent value="demographics" className="space-y-4 pt-4">
+//                 <div className="grid grid-cols-2 gap-4">
+//                   <div>
+//                     <Label htmlFor="firstName">First Name</Label>
+//                     <Input id="firstName" value={formData.firstName} onChange={handleChange} />
+//                   </div>
+//                   <div>
+//                     <Label htmlFor="lastName">Last Name</Label>
+//                     <Input id="lastName" value={formData.lastName} onChange={handleChange} />
+//                   </div>
+//                   <div>
+//                     <Label htmlFor="dob">Date of Birth</Label>
+//                     <Input id="dob" type="date" value={formData.dob} onChange={handleChange} />
+//                   </div>
+//                   <div>
+//                     <Label htmlFor="gender">Gender</Label>
+//                     <Input id="gender" value={formData.gender} onChange={handleChange} />
+//                   </div>
+//                 </div>
+//               </TabsContent>
+
+//               {/* Contact */}
+//               <TabsContent value="contact" className="space-y-4 pt-4">
+//                 <div>
+//                   <Label htmlFor="phone">Phone</Label>
+//                   <Input id="phone" value={formData.phone} onChange={handleChange} />
+//                 </div>
+//                 <div>
+//                   <Label htmlFor="email">Email</Label>
+//                   <Input id="email" value={formData.email} onChange={handleChange} />
+//                 </div>
+//                 <div>
+//                   <Label htmlFor="address">Address</Label>
+//                   <Input id="address" value={formData.address} onChange={handleChange} />
+//                 </div>
+//               </TabsContent>
+
+//               {/* Medical */}
+//               <TabsContent value="medical" className="space-y-4 pt-4">
+//                 <div>
+//                   <Label htmlFor="mrn">MRN</Label>
+//                   <Input id="mrn" value={formData.mrn} onChange={handleChange} />
+//                 </div>
+//                 <div>
+//                   <Label htmlFor="insurance">Insurance</Label>
+//                   <Input id="insurance" value={formData.insurance} onChange={handleChange} />
+//                 </div>
+//                 <div>
+//                   <Label htmlFor="allergies">Allergies</Label>
+//                   <Input id="allergies" value={formData.allergies} onChange={handleChange} />
+//                 </div>
+
+//                 {/* Symptom */}
+//                 <div>
+//                   <Label htmlFor="symptom">Symptoms</Label>
+//                   <Input
+//                     id="symptom"
+//                     placeholder="Type symptom"
+//                     value={query}
+//                     onChange={(e) => setQuery(e.target.value)}
+//                   />
+//                   {loading && <p className="text-sm text-muted-foreground">Searching...</p>}
+//                   {results.length > 0 && (
+//                     <RadioGroup value={selectedTerm || ""} onValueChange={setSelectedTerm}>
+//                       {results.map(item => (
+//                         <div key={item.id}>
+//                           <RadioGroupItem value={item.term} id={`term-${item.id}`} />
+//                           <Label htmlFor={`term-${item.id}`}>{item.term}</Label>
+//                         </div>
+//                       ))}
+//                     </RadioGroup>
+//                   )}
+//                 </div>
+//               </TabsContent>
+//             </Tabs>
+
+//             {/* Buttons */}
+//             <div className="flex justify-end gap-3 pt-6">
+//               <Button variant="outline" onClick={() => setIsAddPatientOpen(false)}>Cancel</Button>
+//               <Button
+//                 onClick={handleAddPatient}
+//                 className="bg-gradient-primary text-white shadow-medical"
+//                 disabled={!formData.firstName || !formData.lastName || !formData.mrn}
+//               >
+//                 Add Patient
+//               </Button>
+//             </div>
+//           </DialogContent>
+//         </Dialog>
+//       </div>
+
+//       {/* Search */}
+//       <Card className="bg-gradient-card border-border shadow-card">
+//         <CardContent>
+//           <Input
+//             placeholder="Search patients by name, MRN, or email..."
+//             value={searchTerm}
+//             onChange={(e) => setSearchTerm(e.target.value)}
+//           />
+//         </CardContent>
+//       </Card>
+
+//       {/* Patient Table */}
+//       <Card className="bg-gradient-card border-border shadow-card">
+//         <CardHeader>
+//           <CardTitle>Patient Records</CardTitle>
+//           <CardDescription>{filteredPatients.length} patients found</CardDescription>
+//         </CardHeader>
+//         <CardContent>
+//           <Table>
+//             <TableHeader>
+//               <TableRow>
+//                 <TableHead>MRN</TableHead>
+//                 <TableHead>Name</TableHead>
+//                 <TableHead>Age</TableHead>
+//                 <TableHead>Gender</TableHead>
+//                 <TableHead>Contact</TableHead>
+//                 <TableHead>Status</TableHead>
+//                 <TableHead>Symptoms</TableHead>
+//               </TableRow>
+//             </TableHeader>
+//             <TableBody>
+//               {filteredPatients.map((p) => (
+//                 <TableRow key={p.id}>
+//                   <TableCell>{p.mrn}</TableCell>
+//                   <TableCell>{p.firstName} {p.lastName}</TableCell>
+//                   <TableCell>{p.dob}</TableCell>
+//                   <TableCell>{p.gender}</TableCell>
+//                   <TableCell>{p.phone} / {p.email}</TableCell>
+//                   <TableCell>
+//                     <Badge variant={p.status === "Active" ? "default" : "secondary"}>{p.status}</Badge>
+//                   </TableCell>
+//                   <TableCell>{p.symptoms.join(", ")}</TableCell>
+//                 </TableRow>
+//               ))}
+//             </TableBody>
+//           </Table>
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// };
+
+// export default PatientManagement;
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Badge } from "../components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "../components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "../components/ui/dialog";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../components/ui/tabs";
 import { Label } from "../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 
@@ -704,7 +1030,9 @@ const PatientManagement = () => {
   const [isAddPatientOpen, setIsAddPatientOpen] = useState(false);
 
   // Form states
-  const [formData, setFormData] = useState<Omit<Patient, "id" | "status" | "symptoms">>({
+  const [formData, setFormData] = useState<
+    Omit<Patient, "id" | "status" | "symptoms">
+  >({
     firstName: "",
     lastName: "",
     dob: "",
@@ -723,7 +1051,7 @@ const PatientManagement = () => {
 
   // Filtered patients
   const filteredPatients = patients.filter(
-    p =>
+    (p) =>
       p.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.mrn.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -754,17 +1082,19 @@ const PatientManagement = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleAddPatient = () => {
     const newPatient: Patient = {
-      id: `P${Math.floor(Math.random() * 10000).toString().padStart(3, "0")}`,
+      id: `P${Math.floor(Math.random() * 10000)
+        .toString()
+        .padStart(3, "0")}`,
       status: "Active",
       symptoms: selectedTerm ? [selectedTerm] : query ? [query] : [],
       ...formData,
     };
-    setPatients(prev => [...prev, newPatient]);
+    setPatients((prev) => [...prev, newPatient]);
     setFormData({
       firstName: "",
       lastName: "",
@@ -783,10 +1113,12 @@ const PatientManagement = () => {
   };
 
   return (
-    <div className="space-y-6 p-6 lg:p-8">
+    <div className="space-y-6 p-10 lg:p-8">
       {/* Header */}
-      <div className="flex justify-between items-start">
-        <h1 className="text-3xl font-semibold text-foreground">Patient Management</h1>
+      <div className="flex justify-between items-start ">
+        <h1 className="text-3xl font-semibold text-foreground">
+          Patient Management
+        </h1>
         <Dialog open={isAddPatientOpen} onOpenChange={setIsAddPatientOpen}>
           <DialogTrigger asChild>
             <Button className="bg-gradient-primary text-white shadow-medical">
@@ -796,11 +1128,13 @@ const PatientManagement = () => {
           <DialogContent className="max-w-2xl bg-card border-border">
             <DialogHeader>
               <DialogTitle>Add New Patient</DialogTitle>
-              <DialogDescription>Fill patient info and add symptom</DialogDescription>
+              <DialogDescription>
+                Fill patient info and add symptom
+              </DialogDescription>
             </DialogHeader>
 
             {/* Form */}
-            <Tabs defaultValue="demographics" className="w-full">
+            <Tabs defaultValue="demographics" className="w-full ">
               <TabsList className="grid w-full grid-cols-3 bg-muted">
                 <TabsTrigger value="demographics">Demographics</TabsTrigger>
                 <TabsTrigger value="contact">Contact</TabsTrigger>
@@ -812,19 +1146,36 @@ const PatientManagement = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" value={formData.firstName} onChange={handleChange} />
+                    <Input
+                      id="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div>
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" value={formData.lastName} onChange={handleChange} />
+                    <Input
+                      id="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div>
                     <Label htmlFor="dob">Date of Birth</Label>
-                    <Input id="dob" type="date" value={formData.dob} onChange={handleChange} />
+                    <Input
+                      id="dob"
+                      type="date"
+                      value={formData.dob}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div>
                     <Label htmlFor="gender">Gender</Label>
-                    <Input id="gender" value={formData.gender} onChange={handleChange} />
+                    <Input
+                      id="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </TabsContent>
@@ -833,31 +1184,55 @@ const PatientManagement = () => {
               <TabsContent value="contact" className="space-y-4 pt-4">
                 <div>
                   <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" value={formData.phone} onChange={handleChange} />
+                  <Input
+                    id="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" value={formData.email} onChange={handleChange} />
+                  <Input
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="address">Address</Label>
-                  <Input id="address" value={formData.address} onChange={handleChange} />
+                  <Input
+                    id="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                  />
                 </div>
               </TabsContent>
 
               {/* Medical */}
-              <TabsContent value="medical" className="space-y-4 pt-4">
+              <TabsContent value="medical" className="space-y-4 pt-4 max-h-[400px] overflow-y-auto pr-2 ">
                 <div>
-                  <Label htmlFor="mrn">MRN</Label>
-                  <Input id="mrn" value={formData.mrn} onChange={handleChange} />
+                  <Label htmlFor="mrn">Medical Record Number</Label>
+                  <Input
+                    id="mrn"
+                    value={formData.mrn}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="insurance">Insurance</Label>
-                  <Input id="insurance" value={formData.insurance} onChange={handleChange} />
+                  <Input
+                    id="insurance"
+                    value={formData.insurance}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="allergies">Allergies</Label>
-                  <Input id="allergies" value={formData.allergies} onChange={handleChange} />
+                  <Input
+                    id="allergies"
+                    value={formData.allergies}
+                    onChange={handleChange}
+                  />
                 </div>
 
                 {/* Symptom */}
@@ -869,16 +1244,39 @@ const PatientManagement = () => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                   />
-                  {loading && <p className="text-sm text-muted-foreground">Searching...</p>}
+                  {loading && (
+                    <p className="text-sm text-muted-foreground">Searching...</p>
+                  )}
+
                   {results.length > 0 && (
-                    <RadioGroup value={selectedTerm || ""} onValueChange={setSelectedTerm}>
-                      {results.map(item => (
-                        <div key={item.id}>
-                          <RadioGroupItem value={item.term} id={`term-${item.id}`} />
-                          <Label htmlFor={`term-${item.id}`}>{item.term}</Label>
-                        </div>
-                      ))}
-                    </RadioGroup>
+                    <div className="space-y-3 mt-4">
+                      <Label>Select from search results</Label>
+                      <RadioGroup
+                        value={selectedTerm || ""}
+                        onValueChange={(val) => setSelectedTerm(val)}
+                      >
+                        {results.map((item) => (
+                          <div
+                            key={item.id}
+                            className="flex items-center space-x-2 border rounded-md p-2 hover:bg-muted cursor-pointer"
+                          >
+                            <RadioGroupItem
+                              value={item.term}
+                              id={`term-${item.id}`}
+                            />
+                            <Label
+                              htmlFor={`term-${item.id}`}
+                              className="flex flex-col cursor-pointer"
+                            >
+                              <span className="font-medium">{item.term}</span>
+                              <span className="text-xs text-muted-foreground">
+                                Rank {item.rank} • Score {item.score.toFixed(2)}
+                              </span>
+                            </Label>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                    </div>
                   )}
                 </div>
               </TabsContent>
@@ -886,7 +1284,12 @@ const PatientManagement = () => {
 
             {/* Buttons */}
             <div className="flex justify-end gap-3 pt-6">
-              <Button variant="outline" onClick={() => setIsAddPatientOpen(false)}>Cancel</Button>
+              <Button
+                variant="outline"
+                onClick={() => setIsAddPatientOpen(false)}
+              >
+                Cancel
+              </Button>
               <Button
                 onClick={handleAddPatient}
                 className="bg-gradient-primary text-white shadow-medical"
@@ -900,7 +1303,7 @@ const PatientManagement = () => {
       </div>
 
       {/* Search */}
-      <Card className="bg-gradient-card border-border shadow-card">
+      <Card className="bg-gradient-card border-border shadow-card pt-4">
         <CardContent>
           <Input
             placeholder="Search patients by name, MRN, or email..."
@@ -911,10 +1314,12 @@ const PatientManagement = () => {
       </Card>
 
       {/* Patient Table */}
-      <Card className="bg-gradient-card border-border shadow-card">
+      <Card className="bg-gradient-card border-border shadow-card ">
         <CardHeader>
           <CardTitle>Patient Records</CardTitle>
-          <CardDescription>{filteredPatients.length} patients found</CardDescription>
+          <CardDescription>
+            {filteredPatients.length} patients found
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
@@ -933,12 +1338,20 @@ const PatientManagement = () => {
               {filteredPatients.map((p) => (
                 <TableRow key={p.id}>
                   <TableCell>{p.mrn}</TableCell>
-                  <TableCell>{p.firstName} {p.lastName}</TableCell>
+                  <TableCell>
+                    {p.firstName} {p.lastName}
+                  </TableCell>
                   <TableCell>{p.dob}</TableCell>
                   <TableCell>{p.gender}</TableCell>
-                  <TableCell>{p.phone} / {p.email}</TableCell>
                   <TableCell>
-                    <Badge variant={p.status === "Active" ? "default" : "secondary"}>{p.status}</Badge>
+                    {p.phone} / {p.email}
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={p.status === "Active" ? "default" : "secondary"}
+                    >
+                      {p.status}
+                    </Badge>
                   </TableCell>
                   <TableCell>{p.symptoms.join(", ")}</TableCell>
                 </TableRow>
